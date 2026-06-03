@@ -180,53 +180,58 @@
   .mobile-menu a:first-child { border-top: 1px solid var(--line); }
   .mobile-menu .mm-foot { margin-top: 40px; }
 
-  /* ── HERO ── */
-  #hero { padding: 150px 0 80px; }
-  .hero-grid {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 56px; align-items: stretch;
+  /* ── HERO (full-bleed) ── */
+  #hero {
+    position: relative; min-height: 100vh;
+    display: flex; align-items: flex-end;
+    padding: 130px 0 74px; overflow: hidden;
   }
-  .hero-left {
-    display: flex; flex-direction: column; justify-content: space-between;
-    padding: 6px 0 4px;
+  .hero-bg { position: absolute; inset: 0; z-index: 0; }
+  .hero-bg img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: saturate(0.96) contrast(1.03);
+    transform: scale(1.06);
+    animation: heroZoom 2.2s var(--ease) .2s forwards;
   }
-  .hero-eyebrow { display: block; margin-bottom: 24px; }
+  .hero-bg::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(12,9,7,0.82) 0%, rgba(12,9,7,0.28) 46%, rgba(12,9,7,0.46) 100%);
+  }
+  @keyframes heroZoom { to { transform: scale(1); } }
+  .hero-content { position: relative; z-index: 2; color: #f5f1ea; max-width: 900px; }
+  .hero-eyebrow { display: block; margin-bottom: 22px; color: rgba(245,241,234,0.85); }
+  .hero-eyebrow .acc { color: var(--accent); }
   .hero-h1 {
     font-family: var(--serif); font-weight: 300;
-    font-size: clamp(2.4rem, 4.6vw, 4.8rem); line-height: 1.0;
-    letter-spacing: -0.02em;
+    font-size: clamp(2.8rem, 7vw, 6.2rem); line-height: 0.98;
+    letter-spacing: -0.02em; color: #f7f3ec;
   }
   .hero-h1 em { font-style: italic; color: var(--accent); }
   .hero-sub {
-    max-width: 40ch; font-size: clamp(0.95rem, 1.1vw, 1.05rem);
-    color: var(--ink-soft); margin-top: 26px;
+    max-width: 46ch; font-size: clamp(1rem, 1.2vw, 1.15rem);
+    color: rgba(245,241,234,0.82); margin-top: 24px;
   }
-  .hero-cta { display: flex; align-items: center; gap: 22px; margin-top: 38px; flex-wrap: wrap; }
+  .hero-cta { display: flex; align-items: center; gap: 22px; margin-top: 40px; flex-wrap: wrap; }
   .btn-fill {
     font-family: var(--mono); font-size: 11px; font-weight: 500;
     letter-spacing: 0.18em; text-transform: uppercase;
-    background: var(--ink); color: var(--paper); border-radius: 100px;
-    padding: 15px 30px; transition: background-color .4s var(--ease);
+    background: #f5f1ea; color: #1a1714; border-radius: 100px;
+    padding: 16px 32px; transition: background-color .4s var(--ease), color .4s;
   }
-  .btn-fill:hover { background: var(--accent); }
+  .btn-fill:hover { background: var(--accent); color: #fff; }
   .btn-play {
     display: inline-flex; align-items: center; gap: 13px;
     background: none; border: none; cursor: pointer;
     font-family: var(--mono); font-size: 11px; font-weight: 500;
-    letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink);
+    letter-spacing: 0.16em; text-transform: uppercase; color: #f5f1ea;
   }
   .play-ring {
-    width: 46px; height: 46px; border-radius: 50%;
-    border: 1px solid var(--line); display: flex; align-items: center; justify-content: center;
-    color: var(--accent); font-size: 11px;
+    width: 48px; height: 48px; border-radius: 50%;
+    border: 1px solid rgba(245,241,234,0.5); display: flex; align-items: center; justify-content: center;
+    color: #f5f1ea; font-size: 11px;
     transition: background-color .4s var(--ease), color .4s, border-color .4s, transform .4s var(--ease);
   }
   .btn-play:hover .play-ring { background: var(--accent); color: #fff; border-color: var(--accent); transform: scale(1.08); }
-  .hero-foot { margin-top: 30px; }
-  .hero-img {
-    position: relative; width: 100%; aspect-ratio: 4/5;
-    overflow: hidden; border-radius: 2px;
-  }
 
   /* ── SHOWREEL ── */
   #showreel { padding: 30px 0 60px; }
@@ -461,8 +466,6 @@
     .cats-layout { grid-template-columns: 1fr; gap: 50px; }
     .cat-preview { display: none; }
     .studio-layout { grid-template-columns: 1fr; gap: 50px; }
-    .hero-grid { grid-template-columns: 1fr; gap: 36px; }
-    .hero-img { aspect-ratio: 16/10; }
   }
   @media (max-width: 768px) {
     .wrap { padding: 0 24px; }
@@ -472,16 +475,14 @@
     .nav-logo img { height: 58px; }
     header.stuck .nav-logo img { height: 50px; }
     .mobile-menu { padding: 0 24px; }
-    #hero { padding: 132px 0 56px; }
+    #hero { padding: 124px 0 60px; min-height: 90vh; }
     .hero-eyebrow { margin-bottom: 16px; }
-    .hero-h1 { font-size: clamp(2.3rem, 9vw, 3rem); }
+    .hero-h1 { font-size: clamp(2.3rem, 9vw, 3.4rem); }
     .hero-sub { margin-top: 20px; }
     .hero-cta { flex-direction: column; align-items: stretch; gap: 12px; margin-top: 30px; }
     .btn-fill { text-align: center; padding: 16px 30px; }
-    .btn-play { justify-content: center; border: 1px solid var(--line); border-radius: 100px; padding: 9px 18px; }
+    .btn-play { justify-content: center; border: 1px solid rgba(245,241,234,0.4); border-radius: 100px; padding: 9px 18px; }
     .hero-cta .play-ring { width: 32px; height: 32px; }
-    .hero-foot { display: none; }
-    .hero-img { aspect-ratio: 4/5; margin-top: 4px; }
     #work, #cats, #studio { padding: 60px 0; }
     #showreel { padding: 20px 0 40px; }
     .showreel-ring { width: 62px; height: 62px; font-size: 16px; }
@@ -549,22 +550,16 @@
 
 <!-- Hero -->
 <section id="hero">
-  <div class="wrap hero-grid">
-    <div class="hero-left">
-      <div>
-        <span class="label hero-eyebrow">Visual Studio — <span class="acc">Beirut, Lebanon</span></span>
-        <h1 class="hero-h1">The moments that don't <em>come twice.</em></h1>
-        <p class="hero-sub">A Beirut photography and film studio for weddings, proposals, and the milestones in between.</p>
-        <div class="hero-cta">
-          <a href="#work" class="btn-fill">View Work</a>
-          <button class="btn-play" id="heroShowreel"><span class="play-ring">▶</span> Watch Showreel</button>
-        </div>
-      </div>
-      <div class="hero-foot label">Weddings · Proposals · Films · Birthdays · Prom · Social</div>
-    </div>
-    <div class="hero-img">
-      <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=1400&q=80" alt="Golden hour ceremony">
-      <span class="hero-cap">Golden hour — Byblos</span>
+  <div class="hero-bg">
+    <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=2200&q=80" alt="Golden hour ceremony">
+  </div>
+  <div class="wrap hero-content">
+    <span class="label hero-eyebrow">Visual Studio — <span class="acc">Beirut, Lebanon</span></span>
+    <h1 class="hero-h1">The moments that don't <em>come twice.</em></h1>
+    <p class="hero-sub">A Beirut photography and film studio for weddings, proposals, and the milestones in between.</p>
+    <div class="hero-cta">
+      <a href="#work" class="btn-fill">View Work</a>
+      <button class="btn-play" id="heroShowreel"><span class="play-ring">▶</span> Watch Showreel</button>
     </div>
   </div>
 </section>
